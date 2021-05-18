@@ -3,3 +3,7 @@
     height: 240px;
     margin: auto;
 }
+
+.cart .quantity {
+    width: 50px;
+}

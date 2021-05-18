@@ -7,7 +7,10 @@
     <div class="collapse navbar-collapse" id="navbarScroll">
         <ul class="navbar-nav my-2 navbar-nav-scroll ml-auto" style="max-height: 100px;">
             <li class="nav-item active">
-                <a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i> Shopping Cart</a>
+                <a class="nav-link" href="{{ route('cart') }}">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="badge badge-warning">{{ Session::has('cart') ?  Session::get('cart')->totalQty : 0 }}</span> Shopping Cart
+                </a>
             </li>
             @guest
                 <li class="nav-item active">
