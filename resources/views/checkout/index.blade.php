@@ -72,8 +72,7 @@
     <script>
         (function () {
             // Create a Stripe client.
-            {{--var stripe = Stripe(@json(config('services.stripe.key')));--}}
-            var stripe = Stripe('pk_test_51DUf97IAvjHUo2ePsmkHG4p4RXlVmmcK3MEX5C0WldrFF7tdxIrqvAE1myBqg4MclcI1UJVKuUrvJhgwGo2dH71S00pTvfOTOO');
+            var stripe = Stripe(@json(config('services.stripe.key')));
 
             // Create an instance of Elements.
             var elements = stripe.elements();

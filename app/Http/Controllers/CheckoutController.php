@@ -20,9 +20,10 @@ class CheckoutController extends Controller
     public function postCheckout(CheckoutRequest $request, StripeGateway $stripeGateway)
     {
         $user = auth()->user();
+        $totalPrice = Product::getProducts()['totalPrice'];
 
         try {
-            $charge = $stripeGateway->charge($request, $user, 12);
+            $charge = $stripeGateway->charge($request, $user, $totalPrice);
 
             $oldCart = Session::get('cart');
 
@@ -33,6 +34,8 @@ class CheckoutController extends Controller
                 $product->stock -= $cart->items[$product->id]['quantity'];
                 $product->update();
             }
+
+            $oldCart->totalPrice = $totalPrice;
 
             Order::create([
                 'user_id' => $user->id,

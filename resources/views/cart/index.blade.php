@@ -37,7 +37,19 @@
                     </li>
                 @endforeach
             </ul>
+
             Total Quantity: <span class="badge badge-warning">{{ $totalQty }}</span>
+
+            <div class="row col-md-4 mt-3">
+                <ul class="list-group">
+                    <li class="list-group-item">Subtotal: ${{ $subTotal }}</li>
+                    @if(auth()->user()->is_vat)
+                    <li class="list-group-item">Tax (VAT): {{ $taxAmount }}</li>
+                    @endif
+                    <li class="list-group-item">Total Price: ${{ $totalPrice }}</li>
+                </ul>
+            </div>
+
             <div class="text-center">
                 <a href="{{ route('checkout') }}" class="btn btn-success">Checkout</a>
             </div>

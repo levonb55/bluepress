@@ -16,6 +16,7 @@
                                         {{ $item['item']['title'] }} | {{ $item['quantity'] }} Units
                                     </li>
                                 @endforeach
+                                Total Price: ${{ $order->cart->totalPrice }}
                             </ul>
                         </div>
                     </div>

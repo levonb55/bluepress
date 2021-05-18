@@ -11,9 +11,7 @@ class StripeGateway
 {
     public function __construct()
     {
-//        Stripe::setApiKey(config('services.stripe.key'));
-        Stripe::setApiKey('sk_test_51DUf97IAvjHUo2eP9E02BWNkXYvqHRMlDganc4ssfkKNA9zRimOHVwUu4jMhHpMFHfyhKjTMZwWiPoiss1MvOS4B00koqLcdJg');
-
+        Stripe::setApiKey(config('services.stripe.secret'));
     }
 
     public function charge($request, $user, $amount)

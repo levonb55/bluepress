@@ -4,6 +4,11 @@
 
 @section('content')
     <div class="container">
+        @if (session('success'))
+            <div class="alert alert-success" role="alert">
+                {{ session('success') }}
+            </div>
+        @endif
         <div class="row">
             @foreach($products as $product)
                 <div class="col-md-3 mr-4 mb-4">

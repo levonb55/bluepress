@@ -10,6 +10,8 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    const VAT_RATE = 20;
+
     /**
      * The attributes that are mass assignable.
      *

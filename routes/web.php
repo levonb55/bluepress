@@ -30,6 +30,3 @@ Route::group(['middleware' => ['auth']], function () {
 //Authentication routes
 Auth::routes();
 Route::get('logout', 'Auth\LoginController@logout')->name('logout');
-
-Route::get('/home', 'HomeController@index');
-

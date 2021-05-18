@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Billing\Cart;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Session;
@@ -11,36 +12,28 @@ use Session;
 class CartController extends Controller
 {
 
+    public static $products = [];
+
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
-        $products = [];
-        $totalQty = 0;
-
         if (Session::has('cart')) {
-            $cart = Session::get('cart');
-            $selectedProducts = $cart->items;
+            $products = Product::getProducts();
 
-            //Send request to the database to have updated prices
-            $products = Product::find(array_keys($selectedProducts));
-
-            foreach ($products as $product) {
-                $product->quantity = $selectedProducts[$product->id]['quantity'];
-            }
-
-            $totalQty = $cart->totalQty;
+            return view('cart.index', [
+                'products' => $products['products'],
+                'totalQty' => $products['totalQty'],
+                'subTotal' => $products['subTotal'],
+                'taxAmount' => $products['taxAmount'],
+                'totalPrice' => $products['subTotal'] + $products['taxAmount']
+            ]);
+        } else {
+            return view('cart.index', [
+                'products' => self::$products,
+            ]);
         }
-
-        if($totalQty == 0) {
-            Session::forget('cart');
-        }
-
-        return view('cart.index', [
-            'products' => $products,
-            'totalQty' => $totalQty
-        ]);
     }
 
     /**
