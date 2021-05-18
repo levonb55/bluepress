@@ -16,6 +16,9 @@ class CartController extends Controller
      */
     public function index()
     {
+        $products = [];
+        $totalQty = 0;
+
         if (Session::has('cart')) {
             $cart = Session::get('cart');
             $selectedProducts = $cart->items;
@@ -26,11 +29,17 @@ class CartController extends Controller
             foreach ($products as $product) {
                 $product->quantity = $selectedProducts[$product->id]['quantity'];
             }
+
+            $totalQty = $cart->totalQty;
+        }
+
+        if($totalQty == 0) {
+            Session::forget('cart');
         }
 
         return view('cart.index', [
-            'products' => $products ?? null,
-            'totalQty' => $cart->totalQty ?? 0
+            'products' => $products,
+            'totalQty' => $totalQty
         ]);
     }
 

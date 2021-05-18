@@ -38,9 +38,11 @@
                 @endforeach
             </ul>
             Total Quantity: <span class="badge badge-warning">{{ $totalQty }}</span>
+            <div class="text-center">
+                <a href="{{ route('checkout') }}" class="btn btn-success">Checkout</a>
+            </div>
         @else
             <h4>Cart is empty!</h4>
         @endif
-
     </div>
 @endsection
