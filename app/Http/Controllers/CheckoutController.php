@@ -12,11 +12,19 @@ use App\Billing\Cart;
 
 class CheckoutController extends Controller
 {
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function getCheckout()
     {
         return view('checkout.index');
     }
 
+    /**
+     * @param CheckoutRequest $request
+     * @param StripeGateway $stripeGateway
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function postCheckout(CheckoutRequest $request, StripeGateway $stripeGateway)
     {
         $user = auth()->user();
@@ -31,8 +39,10 @@ class CheckoutController extends Controller
             $products = Product::find(array_keys($cart->items));
 
             foreach ($products as $product) {
-                $product->stock -= $cart->items[$product->id]['quantity'];
-                $product->update();
+                if ($product->is_physical) {
+                    $product->stock -= $cart->items[$product->id]['quantity'];
+                    $product->update();
+                }
             }
 
             $oldCart->totalPrice = $totalPrice;

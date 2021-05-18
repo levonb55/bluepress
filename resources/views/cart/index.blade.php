@@ -12,21 +12,23 @@
                         <div class="row">
                             <div class="col-md-6 d-flex">
                                 <span>{{ $product->title }}</span>
-                                <form action="{{ route('cart.change', $product->id) }}" method="POST"
-                                      class="offset-md-2">
-                                    @csrf
-                                    <input type="number" min="1" name="quantity" value="{{ $product->quantity }}"
-                                           class="quantity">
-                                    <input type="submit" value="Change">
-                                    @if(Session::has('quantity-' . $product->id))
-                                        <div class="alert alert-danger">
-                                            {{ Session::get('quantity-' . $product->id) }}
-                                        </div>
-                                    @endif
-                                </form>
-                            </div>
-                            <div class="col-md-3">
-                                Stock: {{ $product->stock }}
+                                @if($product->is_physical)
+                                    <form action="{{ route('cart.change', $product->id) }}" method="POST"
+                                          class="offset-md-2">
+                                        @csrf
+                                        <input type="number" min="1" name="quantity" value="{{ $product->quantity }}"
+                                               class="quantity">
+                                        <input type="submit" value="Change">
+                                        @if(Session::has('quantity-' . $product->id))
+                                            <div class="alert alert-danger">
+                                                {{ Session::get('quantity-' . $product->id) }}
+                                            </div>
+                                        @endif
+                                    </form>
+                                    <div class="ml-4">
+                                        Stock: {{ $product->stock }}
+                                    </div>
+                                @endif
                             </div>
                             <div class="col-md-1 offset-md-2">
                                 <span class="badge badge-secondary">${{ $product->price }}</span>
@@ -43,8 +45,8 @@
             <div class="row col-md-4 mt-3">
                 <ul class="list-group">
                     <li class="list-group-item">Subtotal: ${{ $subTotal }}</li>
-                    @if(auth()->user()->is_vat)
-                    <li class="list-group-item">Tax (VAT): {{ $taxAmount }}</li>
+                    @if(auth()->user() && auth()->user()->is_vat)
+                        <li class="list-group-item">Tax (VAT): {{ $taxAmount }}</li>
                     @endif
                     <li class="list-group-item">Total Price: ${{ $totalPrice }}</li>
                 </ul>

@@ -8,7 +8,7 @@ use Session;
 class Product extends Model
 {
     protected $fillable = [
-        'image_path', 'title', 'description', 'price', 'stock'
+        'image_path', 'title', 'description', 'price', 'is_physical', 'stock'
     ];
 
     public static $products = [];
@@ -31,7 +31,7 @@ class Product extends Model
 
         self::$totalQty = $cart->totalQty;
 
-        if (auth()->user()->is_vat) {
+        if (auth()->user() && auth()->user()->is_vat) {
             self::$taxAmount = (self::$subTotal * User::VAT_RATE) / 100;
         }
 
@@ -42,5 +42,13 @@ class Product extends Model
             'taxAmount' => self::$taxAmount,
             'totalPrice' => self::$subTotal + self::$taxAmount
         ];
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function features()
+    {
+        return $this->hasMany('App\Models\Feature');
     }
 }

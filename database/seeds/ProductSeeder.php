@@ -13,47 +13,31 @@ class ProductSeeder extends Seeder
     public function run()
     {
         $product = new Product([
-            'image_path' => 'http://ecx.images-amazon.com/images/I/51ZU%2BCvkTyL.jpg',
-            'title' => 'Harry Potter',
-            'description' => 'Super cool - at least as a child.',
+            'image_path' => 'https://www.notebookcheck.net/uploads/tx_nbc2/4zu3_Asus_Vivobook_14_X412FJ.jpg',
+            'title' => 'Laptop Asus Vivobook',
+            'description' => 'Super cool',
             'price' => 10,
-            'stock' => 5
+            'is_physical' => 1,
+            'stock' => 17
         ]);
         $product->save();
 
         $product = new Product([
-            'image_path' => 'http://www.revelationz.net/images/book/gameofthrones3.jpg',
-            'title' => 'A Song of Ice and Fire - A Storm of Swords',
-            'description' => 'No one is going to survive!',
+            'image_path' => 'https://image.ebooks.com/previews/210/210173/210173281/210173281.jpg',
+            'title' => 'Head First Design Patterns',
+            'description' => 'Book in pdf format',
             'price' => 12,
-            'stock' => 4
+            'is_physical' => 0,
         ]);
         $product->save();
 
         $product = new Product([
-            'image_path' => 'http://d.gr-assets.com/books/1411114164l/33.jpg',
-            'title' => 'Lord of the Rings',
-            'description' => 'I found the movies to be better ...',
+            'image_path' => 'https://assets.swappie.com/swappie-product-iphone-12-blue.png',
+            'title' => 'Iphone',
+            'description' => '12th generation',
             'price' => 20,
-            'stock' => 5
-        ]);
-        $product->save();
-
-        $product = new Product([
-            'image_path' => 'http://ecx.images-amazon.com/images/I/919-FLL37TL.jpg',
-            'title' => 'A Song of Ice and Fire - Game of Thrones',
-            'description' => 'No one is going to survive!',
-            'price' => 8,
-            'stock' => 10
-        ]);
-        $product->save();
-
-        $product = new Product([
-            'image_path' => 'http://www.georgerrmartin.com/wp-content/uploads/2012/08/feastforcrows.jpg',
-            'title' => 'A Song of Ice and Fire - A Feast for Crows',
-            'description' => 'Still, no one is going to survive!',
-            'price' => 22,
-            'stock' => 6
+            'is_physical' => 1,
+            'stock' => 22
         ]);
         $product->save();
     }

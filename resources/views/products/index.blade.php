@@ -19,9 +19,17 @@
                             <p class="card-text">
                                 {{ $product->description }}
                             </p>
+
+                            <ul>
+                                @foreach($product->features as $feature)
+                                    <li>{{ $feature->title . ' - ' . $feature->description }}</li>
+                                @endforeach
+                            </ul>
+
                             <a href="{{ route('cart.add', $product->id) }}" class="btn btn-primary">Add to Cart</a>
                             <span class="float-right">${{ $product->price }}</span>
                         </div>
+
                         @if(Session::has('taken' . $product->id))
                             <div class="alert alert-danger">
                                 {{ Session::get('taken' . $product->id) }}
