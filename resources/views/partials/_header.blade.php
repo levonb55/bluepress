@@ -27,7 +27,7 @@
                         {{ auth()->user()->name }}
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                        <li><a class="dropdown-item" href="#">Profile</a></li>
+                        <li><a class="dropdown-item" href="{{ route('users.show') }}">Profile</a></li>
                         <li><a class="dropdown-item" href="{{ route('logout') }}">Logout</a></li>
                     </ul>
                 </li>

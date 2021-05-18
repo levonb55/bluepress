@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Billing\StripeGateway;
 use App\Http\Requests\CheckoutRequest;
+use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Session;
@@ -21,11 +22,11 @@ class CheckoutController extends Controller
         $user = auth()->user();
 
         try {
-            $stripeGateway->charge($request, $user, 12);
+            $charge = $stripeGateway->charge($request, $user, 12);
 
-            Session::forget('cart');
+            $oldCart = Session::get('cart');
 
-            $cart = new Cart(Session::get('cart'));
+            $cart = new Cart($oldCart);
             $products = Product::find(array_keys($cart->items));
 
             foreach ($products as $product) {
@@ -33,8 +34,17 @@ class CheckoutController extends Controller
                 $product->update();
             }
 
-            return redirect()->route('home')->with('success', 'You successfully made a purchase!');
+            Order::create([
+                'user_id' => $user->id,
+                'name' => $request->name,
+                'postal_code' => $request->postal_code,
+                'cart' => serialize($oldCart),
+                'payment_id' => $charge->id
+            ]);
 
+            Session::forget('cart');
+
+            return redirect()->route('home')->with('success', 'You successfully made a purchase!');
         } catch (\Exception $e) {
             return back()->with('payment-error', $e->getMessage());
         }
